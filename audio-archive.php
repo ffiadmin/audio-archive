@@ -14,7 +14,8 @@ License: MIT
 	define("FFI_AAM_FAKE_ADDR", get_site_url() . "/audio-archive/");
 	
 //Register installation and uninstallation hooks
-	//new FFI_AAM_Hook_Reg();
+	require_once(FFI_AAM_REAL_ADDR . "includes/FFI_AAM_Hook_Manager.php");
+	new FFI_AAM_Hook_Manager("FFI_AAM_Installer", "FFI_AAM_Uninstaller");
 	
 
 ?>
