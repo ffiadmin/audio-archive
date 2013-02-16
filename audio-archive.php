@@ -9,13 +9,20 @@ Author URI: http://forwardfour.com/
 License: MIT
 */
 
+	namespace FFI\AAM;
+
 //Create plugin-specific global definitions
-	define("FFI_AAM_REAL_ADDR", get_site_url() . "/wp-content/plugins/audio-archive/");
-	define("FFI_AAM_FAKE_ADDR", get_site_url() . "/audio-archive/");
+	define("FILE", __FILE__);
+	define("PATH", plugin_dir_path(__FILE__));
+	define("REAL_ADDR", get_site_url() . "/wp-content/plugins/audio-archive/");
+	define("FAKE_ADDR", get_site_url() . "/audio-archive/");
 	
+	error_reporting(E_ALL);
 //Register installation and uninstallation hooks
-	require_once(FFI_AAM_REAL_ADDR . "includes/FFI_AAM_Hook_Manager.php");
-	new FFI_AAM_Hook_Manager("FFI_AAM_Installer", "FFI_AAM_Uninstaller");
+	require_once(PATH . "includes/Hook_Manager.php");
+	$hook = new Hook_Manager();
 	
+	register_activation_hook(__FILE__, array(&$hook, "activationHandler"));
+	register_uninstall_hook(__FILE__, array(&$hook, "uninstallHandler"));
 
 ?>
