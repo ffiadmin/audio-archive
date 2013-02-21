@@ -1,15 +1,15 @@
 <?php
 /**
- * Book Exchange interception class
+ * Plugin content interception class
  *
- * This class is used to initialize the Book Exchange plugin. When
+ * This class is used to initialize the current plugin. When
  * Wordpress processes each page, this class will listen for any
  * requests structured like this:
  *
- *    http://<wordpress-site>/book-exchange/...
+ *    http://<wordpress-site>/<plugin-name>/...
  *
  * and will include the appropraite file from within the 
- * wp-includes/plugins/book-exchange/app folder to replace the 
+ * wp-includes/plugins/<plugin-name>/app folder to replace the 
  * content of the page.
  *
  * Much of this plugin will involve rewriting the content of 404
@@ -19,11 +19,14 @@
  * @author    Oliver Spryn
  * @copyright Copyright (c) 2013 and Onwards, ForwardFour Innovations
  * @license   MIT
+ * @namespace FFI\AAM
  * @package   includes
  * @since     v2.0 Dev
 */
 
-class FFI_BE_Interception_Manager {
+namespace FFI\AAM;
+
+class Interception_Manager {
 /**
  * Hold the address current page without the protocol and installation
  * address of Wordpress.
@@ -59,13 +62,13 @@ class FFI_BE_Interception_Manager {
  *
  * This method will:
  *  - Activate on URLs strucutre like this: 
- *    http://<wordpress-site>/book-exchange/...
+ *    http://<wordpress-site>/<plugin-name>/...
  *  - Parse the requested URL into an address which can be used to
  *    fetch correct script from the "app" directory
  *  - Include the "pluggable" function library from Wordpress
  *  - Include requests for the appropriate application files
- *  - Utilize the FFI_BE_Page_Info_Manager class to give the page an
- *    appropriate title and load necessary stylesheets and scripts
+ *  - Utilize the Essentials class to give the page an appropriate 
+ *    title and load necessary stylesheets and scripts
  *  - Replace the content of the page with that from the loaded page
  * 
  * @access public
@@ -92,9 +95,9 @@ class FFI_BE_Interception_Manager {
 		 *  - A 404 version where the entire page is generated, since its
 		 *    contents cannot be replaced
 		 *
-		 * Both are necessary since a link to the Book Exchange will likely
+		 * Both are necessary since a link to this plugin's main page will likely
 		 * exist on the main navigtaion bar, so users can access it. However,
-		 * for links farther inside of the plugin, such as book-exchange/sell,
+		 * for links farther inside of the plugin, such as <plugin-name>/subpage,
 		 * Wordpress will see this as a request for a page which does not 
 		 * exist. Therefore, listening for the 404 action enables us to 
 		 * completely replace the contents of the 404 page with the correct
@@ -105,9 +108,14 @@ class FFI_BE_Interception_Manager {
 			require_once(ABSPATH . "wp-includes/pluggable.php");
 			
 		//Run the required script first, so if any modifications should be made to header
-			$path = FFI_BE_PATH . "app" . $this->scriptURL;
+			$path = PATH . "app" . $this->scriptURL;
 		
 			if (file_exists($path)) {
+			//Plugin essentials
+				require_once(PATH . "/includes/Essentials.php");
+				$essentials = new Essentials();
+				
+			//Generate the content of the page
 				ob_start();
 				require_once($path);
 				$this->content = ob_get_contents();
@@ -138,9 +146,8 @@ class FFI_BE_Interception_Manager {
 	
 /**
  * Parse the address to see if the plugin should become active. This
- * method also creates a global constant FFI_BE_ACTIVE, if the method
- * has determined that this URL will display book exchange related 
- * content.
+ * method also creates a global constant ACTIVE, if the method has 
+ * determined that this URL will display data from this plugin.
  *
  * @access private
  * @return boolean
@@ -150,8 +157,8 @@ class FFI_BE_Interception_Manager {
 	private function activatePlugin() {
 		$URL = parse_url($this->requestedURL);
 		
-		if (stristr($URL['path'], "book-exchange")) {
-			define("FFI_BE_ACTIVE", TRUE);
+		if (stristr($URL['path'], URL_ACTIVATE)) {
+			define("ACTIVE", TRUE);
 			return true;
 		}
 		
@@ -168,12 +175,12 @@ class FFI_BE_Interception_Manager {
 */
 	
 	private function generateURL() {
-		$URL =  parse_url(str_ireplace("/book-exchange", "", $this->requestedURL));
+		$URL =  parse_url(str_ireplace("/" . URL_ACTIVATE, "", $this->requestedURL));
 		$return = $URL['path'];
 		
 	/**
 	 * Now that we have the path the script, do we need to include index.php, 
-	 * if a request was made like this: /book-exchange/
+	 * if a request was made like this: /<plugin-name>/
 	 *
 	 * If the path does not end with ".php" then include "index.php" on the
 	 * end to indicate the physical URL of the required script.

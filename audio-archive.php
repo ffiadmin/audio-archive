@@ -16,8 +16,9 @@ License: MIT
 	define("PATH", plugin_dir_path(__FILE__));
 	define("REAL_ADDR", get_site_url() . "/wp-content/plugins/audio-archive/");
 	define("FAKE_ADDR", get_site_url() . "/audio-archive/");
-	
+	define("URL_ACTIVATE", "audio-archive");
 	error_reporting(E_ALL);
+	
 //Register installation and uninstallation hooks
 	require_once(PATH . "includes/Hook_Manager.php");
 	$hook = new Hook_Manager();
@@ -25,4 +26,19 @@ License: MIT
 	register_activation_hook(__FILE__, array(&$hook, "activationHandler"));
 	register_uninstall_hook(__FILE__, array(&$hook, "uninstallHandler"));
 
+//Instantiate the Interception_Manager
+	if(!is_admin()) {
+		require_once(PATH . "includes/Interception_Manager.php");
+		new Interception_Manager();
+	} else {
+		add_action("admin_menu", "FFI\\AAM\\register_custom_menu_page");
+		
+		function register_custom_menu_page() {
+			add_menu_page("Archive Manager", "Archive Manager", "update_core", "custompage", "FFI\\AAM\\custom_menu_page");
+		}
+		
+		function custom_menu_page() {
+			echo "WHOA! You're here!";
+		}
+	}
 ?>

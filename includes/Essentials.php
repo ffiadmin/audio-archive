@@ -1,8 +1,8 @@
 <?php
 /**
- * Audio Archive Manager page essentials class
+ * Plugin page essentials class
  *
- * This class is used at the top of every script in this plugin.
+ * This class is used at the top of every plugin page script.
  * Its abilities are central to the structing and security of
  * each page. Its abilities include:
  *  - user access control
@@ -79,9 +79,6 @@ class Essentials {
  * Check if the user is logged in. If so, then grant access to 
  * this page, otherwise, redirect to the login page.
  *
- * All users will have access to the features of the Book Exchange,
- * so there is no reason to check for certain privileges.
- *
  * This method will also obtain access the the current user's 
  * information, if they are logged in.
  * 
@@ -103,7 +100,7 @@ class Essentials {
 	}
 	
 /**
- * This method will obtain access the the current user's  information, 
+ * This method will obtain access the the current user's information, 
  * if they are logged in.
  * 
  * @access public
@@ -153,7 +150,7 @@ class Essentials {
 /**
  * Include the requested PHP script with respect to the app folder.
  * So a request like this "system/server/Validate.php" will include
- * the script like soL .../book-exchange/app/system/server/Validate.php.
+ * the script like so: .../<plugin-name>/app/system/server/Validate.php.
  * regardless of the address of the PHP file which requested the script.
  *
  * This method uses the "require_once()" function to import the 
@@ -166,14 +163,14 @@ class Essentials {
 */
 
 	public function includePHP($address) {
-		require_once(FFI_BE_PATH . "app/" . $address);
+		require_once(PATH . "app/" . $address);
 	}
 	
 /**
  * Include the requested stylesheet in the <head> section of the page.
  * Local stylesheets are requested with respect to the "app" folder.
- * So a request such as "system/stylesheet/sell.css" would include the 
- * stylesheet like so: .../book-exchange/app/system/stylesheet/sell.css,
+ * So a request such as "system/stylesheet/style.css" would include the 
+ * stylesheet like so: .../<plugin-name>/app/system/stylesheet/style.css,
  * regardless of the address of the PHP file which requested the script.
  *
  * External stylesheets must be prefixed with a "//" for this class to 
@@ -208,12 +205,12 @@ class Essentials {
 	
 	public function actionHookIncludeCSS($CSS) {		
 		for($i = count($this->CSS) - 1; $i >= 0; $i--) {
-			$styleName = "FFI_BE_STYLE_ID_" . mt_rand();
+			$styleName = "STYLE_ID_" . mt_rand();
 			
 		//Local stylesheets will need their address modified
 		//The address for external stylesheets begin with "//"
 			if (substr($this->CSS[$i], 0, 2) != "//") {
-				$this->CSS[$i] = FFI_BE_REAL_ADDR . "app/" . $this->CSS[$i];
+				$this->CSS[$i] = REAL_ADDR . "app/" . $this->CSS[$i];
 			}
 			
 			wp_register_style($styleName, $this->CSS[$i], array(), NULL); //NULL removes the ?ver from the URL
@@ -222,11 +219,11 @@ class Essentials {
 	}
 	
 /**
- * Include the requested script in the <head> section of the page.
- * Local scripts are requested with respect to the "app" folder.
- * So a request such as "system/javascripts/interface.js" would include
- * the script like so: .../book-exchange/app/system/javascripts/interface.js,
- * regardless of the address of the PHP file which requested the script.
+ * Include the requested script in the <head> section of the page. Local 
+ * scripts are requested with respect to the "app" folder. So a request 
+ * such as "system/javascripts/script.js" would includethe script like so:
+ * .../<plugin-name>/app/system/javascripts/script.js, regardless of the 
+ * address of the PHP file which requested the script.
  *
  * External scripts must be prefixed with a "//" for this class to 
  * know the request is for an external JS file.
@@ -260,12 +257,12 @@ class Essentials {
 	
 	public function actionHookIncludeJS() {
 		for($i = count($this->JS) - 1; $i >= 0; $i--) {
-			$styleName = "FFI_BE_SCRIPT_ID_" . mt_rand();
+			$styleName = "SCRIPT_ID_" . mt_rand();
 			
 		//Local scripts will need their address modified
 		//The address for external scripts begin with "//"
 			if (substr($this->JS[$i], 0, 2) != "//") {
-				$this->JS[$i] = FFI_BE_REAL_ADDR . "app/" . $this->JS[$i];
+				$this->JS[$i] = REAL_ADDR . "app/" . $this->JS[$i];
 			}
 			
 			wp_register_script($styleName, $this->JS[$i], array(), NULL); //NULL removes the ?ver from the URL
@@ -277,7 +274,7 @@ class Essentials {
  * This method will take a URL relative to the plugin's "app"
  * folder and append the actual physical address to this file.
  * So a request such as "system/images/bkg.jpg" would rewrite
- * the URL like so: .../book-exchange/app/system/images/bkg.jpg.
+ * the URL like so: .../<plugin-name>/app/system/images/bkg.jpg.
  *
  * @access public
  * @param  string   $address The URL with respect to the "app" folder
@@ -286,15 +283,15 @@ class Essentials {
 */
 	
 	public function normalizeURL($address) {
-		return FFI_BE_REAL_ADDR . "app/" . $address;
+		return REAL_ADDR . "app/" . $address;
 	}
 	
 /**
  * This method will take a URL relative with respect to the "app" 
  * folder and give it an absolute URL with respect to the friendly 
- * URL of this plugin. So a request such as "listings/details.php" 
+ * URL of this plugin. So a request such as "subpage/details.php" 
  * would rewrite the URL like so: 
- * http://<wordpress-site/book-exchange/listings/details.php
+ * http://<wordpress-site/<plugin-name>/listings/details.php
  *
  * @access public
  * @param  string   $address The URL with respect to the "app" folder
@@ -303,7 +300,7 @@ class Essentials {
 */
 
 	public function friendlyURL($address) {
-		return FFI_BE_FAKE_ADDR . $address;
+		return FAKE_ADDR . $address;
 	}
 }
 ?>
