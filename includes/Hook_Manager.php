@@ -9,6 +9,7 @@
  * @author    Oliver Spryn
  * @copyright Copyright (c) 2013 and Onwards, ForwardFour Innovations
  * @license   MIT
+ * @namespace FFI\AAM
  * @package   includes
  * @since     v1.0 Dev
 */
