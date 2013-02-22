@@ -32,13 +32,90 @@ License: MIT
 		new Interception_Manager();
 	} else {
 		add_action("admin_menu", "FFI\\AAM\\register_custom_menu_page");
+		add_action("admin_init", "FFI\\AAM\\add_highcharts");
 		
 		function register_custom_menu_page() {
-			add_menu_page("Archive Manager", "Archive Manager", "update_core", "custompage", "FFI\\AAM\\custom_menu_page");
+			global $menu;
+   			global $submenu;
+			
+			add_menu_page("Statistics", "Archive Manager", "update_core", "custompage", "FFI\\AAM\\custom_menu_page");
+			add_submenu_page("custompage", "Update Metadata", "Update Metadata", "update_core", "customstats", "FFI\\AAM\\custom_menu_page");
+			
+			$submenu['custompage'][0][0] = "Statistics";
 		}
 		
 		function custom_menu_page() {
-			echo "WHOA! You're here!";
+			echo "<script type=\"text/javascript\">
+    var chart;
+    jQuery(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'spline'
+            },
+			credits: {
+				enabled: false
+			},
+			exporting: {
+				buttons: {
+					exportButton: {
+						enabled: false,
+					},
+					printButton: {
+						enabled: false
+					}
+				}
+			},
+			legend: {
+				enabled: false
+			},
+            title: {
+                text: 'Daily Hits'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+				min: 0,
+                title: {
+                    text: null
+                }
+            },
+            tooltip: {
+				crosshairs: true,
+				shared: true
+            },
+            series: [{
+                name: 'Total',
+                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+            }, {
+                name: 'Downloads',
+                data: [0, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+            }, {
+                name: 'Streams',
+                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+            }]
+        });
+    });
+</script>
+			
+<div class=\"wrap\">
+<div id=\"icon-upload\" class=\"icon32\"><br></div>
+<h2>Statistics</h2>
+
+<div id=\"container\" style=\"min-width: 400px; height: 400px; margin: 0 auto\"></div>
+</div>";
 		}
+	
+		function add_highcharts() {
+			wp_register_script("highcharts", "//cdnjs.cloudflare.com/ajax/libs/highcharts/2.3.5/highcharts.js", array("jquery"));
+			wp_enqueue_script("highcharts");
+			
+			wp_register_script("highcharts-exporting", "//cdnjs.cloudflare.com/ajax/libs/highcharts/2.3.5/modules/exporting.js", array("highcharts"));
+			wp_enqueue_script("highcharts-exporting");
+		}
+		
+		
 	}
 ?>
