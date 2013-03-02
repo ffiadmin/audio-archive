@@ -12,11 +12,11 @@ License: MIT
 	namespace FFI\AAM;
 
 //Create plugin-specific global definitions
-	define("FILE", __FILE__);
-	define("PATH", plugin_dir_path(__FILE__));
-	define("REAL_ADDR", get_site_url() . "/wp-content/plugins/audio-archive/");
-	define("FAKE_ADDR", get_site_url() . "/audio-archive/");
-	define("URL_ACTIVATE", "audio-archive");
+	define("FFI\AAM\FILE", __FILE__);
+	define("FFI\AAM\PATH", plugin_dir_path(__FILE__));
+	define("FFI\AAM\REAL_ADDR", get_site_url() . "/wp-content/plugins/audio-archive/");
+	define("FFI\AAM\FAKE_ADDR", get_site_url() . "/audio-archive/");
+	define("FFI\AAM\URL_ACTIVATE", "audio-archive");
 	
 //Register installation and uninstallation hooks
 	require_once(PATH . "includes/Hook_Manager.php");

@@ -82,6 +82,7 @@ class Installer {
 					  `Length` VARCHAR(16) NOT NULL,
 					  `FileSize` FLOAT NOT NULL,
 					  `FileName` VARCHAR(128) NOT NULL,
+					  `CacheTimestamp` DATETIME NULL,
 					  PRIMARY KEY (`ID`),
 					  UNIQUE (`FileName`)
 					);");
@@ -102,6 +103,9 @@ class Installer {
 					
 	//Add the foreign key relationship between ffi_aam_filestats and ffi_aam_audiocache
 		$wpdb->query("ALTER TABLE `ffi_aam_filestats` ADD CONSTRAINT `FFI_AAM_FILE_STATS_REFERENCES_CACHE` FOREIGN KEY (`AudioID`) REFERENCES `ffi_aam_audiocache` (`id`) ON DELETE CASCADE;");
+		
+	//Add a trigger to add a timestamp in the ffi_aam_audiocache when a new cache entry is added
+		$wpdb->query("CREATE TRIGGER FFI_AAM_ADD_TIMESTAMP_ON_INSERT BEFORE INSERT ON `ffi_aam_audiocache` FOR EACH ROW SET NEW.CacheTimestamp = IFNULL(NEW.CacheTimestamp, NOW());");
 	}
 	
 /**

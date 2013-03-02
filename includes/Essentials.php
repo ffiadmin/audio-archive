@@ -16,7 +16,7 @@
  * @license   MIT
  * @namespace FFI\AAM
  * @package   includes
- * @since     v2.0 Dev
+ * @since     v1.0 Dev
 */
 
 namespace FFI\AAM;
@@ -68,7 +68,7 @@ class Essentials {
  * 
  * @access public
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 
 	public function __construct() {
@@ -84,7 +84,7 @@ class Essentials {
  * 
  * @access public
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 
 	public function requireLogin() {
@@ -105,7 +105,7 @@ class Essentials {
  * 
  * @access public
  * @return boolean  Whether or not the user's information could be obtained, based on their login status
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 	
 	public function storeUserInfo() {
@@ -126,7 +126,7 @@ class Essentials {
  * @access public
  * @param  string   $title The title of the HTML page
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 
 	public function setTitle($title) {
@@ -140,7 +140,7 @@ class Essentials {
  * 
  * @access public
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 	
 	public function actionHookSetTitle($title) {
@@ -150,7 +150,7 @@ class Essentials {
 /**
  * Include the requested PHP script with respect to the app folder.
  * So a request like this "system/server/Validate.php" will include
- * the script like so: .../<plugin-name>/app/system/server/Validate.php.
+ * the script like so: .../<plugin-name>/app/system/server/Validate.php,
  * regardless of the address of the PHP file which requested the script.
  *
  * This method uses the "require_once()" function to import the 
@@ -159,11 +159,30 @@ class Essentials {
  * @access public
  * @param  string   $address The of the PHP script URL with respect to the "app" folder
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 
 	public function includePHP($address) {
 		require_once(PATH . "app/" . $address);
+	}
+	
+/**
+ * Include the requested PHP class script with respect to the includes
+ * folder. So a request like this "Validate" will include the class script
+ * like so: .../<plugin-name>/includes/Validate.php, regardless of the
+ * address of the PHP file which requested the script.
+ *
+ * This method uses the "require_once()" function to import the 
+ * script.
+ *
+ * @access public
+ * @param  string   $class The name of of the PHP plugin class to import
+ * @return void
+ * @since  v1.0 Dev
+*/
+
+	public function includePluginClass($class) {
+		require_once(PATH . "includes/" . $class . ".php");
 	}
 	
 /**
@@ -185,7 +204,7 @@ class Essentials {
  * @access public
  * @param  string   $address The URL of the external stylesheet or the URL with respect to the "app" folder
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 
 	public function includeCSS($address) {
@@ -200,11 +219,11 @@ class Essentials {
  * 
  * @access public
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 	
 	public function actionHookIncludeCSS($CSS) {		
-		for($i = count($this->CSS) - 1; $i >= 0; $i--) {
+		for($i = 0; $i < count($this->CSS); ++$i) {
 			$styleName = "STYLE_ID_" . mt_rand();
 			
 		//Local stylesheets will need their address modified
@@ -237,7 +256,7 @@ class Essentials {
  * @access public
  * @param  string   $address The URL of the external script or the URL with respect to the "app" folder
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 
 	public function includeJS($address) {
@@ -252,11 +271,11 @@ class Essentials {
  * 
  * @access public
  * @return void
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 	
 	public function actionHookIncludeJS() {
-		for($i = count($this->JS) - 1; $i >= 0; $i--) {
+		for($i = 0; $i < count($this->JS); ++$i) {
 			$styleName = "SCRIPT_ID_" . mt_rand();
 			
 		//Local scripts will need their address modified
@@ -279,7 +298,7 @@ class Essentials {
  * @access public
  * @param  string   $address The URL with respect to the "app" folder
  * @return string   $address The normalized version of the given URL
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 	
 	public function normalizeURL($address) {
@@ -296,7 +315,7 @@ class Essentials {
  * @access public
  * @param  string   $address The URL with respect to the "app" folder
  * @return string   $address The friendly version of the given URL
- * @since  v2.0 Dev
+ * @since  v1.0 Dev
 */
 
 	public function friendlyURL($address) {
