@@ -82,7 +82,8 @@ class Audio_Caching_Manager {
  * items from the metadata are cached into the ffi_aam_audiocache relation:
  *  - title
  *  - artist
- *  - year
+ *  - date (custom metadata tag, not native to MP3, uses file last modified time
+ *    if not avaliable)
  *  - audio play time
  *  - file size
  *  - file name
@@ -105,24 +106,53 @@ class Audio_Caching_Manager {
 				$fileData = $getID3->analyze($this->rootDirectory . $file);
 				$title = "";
 				$artist = "";
-				$year = "";
-			
-			//Some of the metadata may not exist, so check it before usings its values
+				$date = "";
+				
+			//Generate the MP3 title
 				if (isset($fileData['id3v2']['comments']['title'])) {
 					$title = implode(", ", $fileData['id3v2']['comments']['title']);
 				} else {
 					$title = substr($fileData['filename'], 0, strlen($fileData['filename']) - 4); //Remove ".mp3"
 				}
 				
+			//Grab the artist name
 				if (isset($fileData['id3v2']['comments']['artist'])) {
 					$artist = implode(", ", $fileData['id3v2']['comments']['artist']);
 				}
 				
-				if (isset($fileData['id3v2']['comments']['year'])) {
-					$year = implode(", ", $fileData['id3v2']['comments']['year']);
+			//Generate the recording date
+			//This information may be located in the metadata...
+				if (isset($fileData['tags']['id3v2']['text']) && is_array($fileData['tags']['id3v2']['text'])) {
+					$loopDate = "";
+					
+				//Since there may be multiple pieces of infomation embedded in this array, iterate over it until we find a date
+					for($i = 0; $i < count($fileData['tags']['id3v2']['text']); ++$i) {
+						$loopDate = $fileData['tags']['id3v2']['text'][$i];
+						
+					//We cannot use the exception thrown by the DateTime constructor if the given value is not
+					//a date, because of a bug in PHP with constructors throwing exceptions. Use the procedural
+					//style strtotime() function to check if we have found a date, then use the DateTime class
+					//to handle the rest, and exit the loop.
+						if (@strtotime($loopDate) !== false) {
+							$date = new \DateTime($loopDate); //Grab from the metadata
+							break;
+						}
+					}
+					
+				//If we didn't encounter a date, use the last modified date from the file
+					if ($date == "") {
+						$date = new \DateTime();
+						$date->setTimestamp(filectime($this->rootDirectory . $file)); //Read from the last modified date
+					}
+			//... or we may have to use the the last modified date from the file
+				} else {
+					$date = new \DateTime();
+					$date->setTimestamp(filectime($this->rootDirectory . $file)); //Read from the last modified date
 				}
 				
-			//Converts something like 4578863 to 4.6
+				$date = $date->format("Y-m-d");
+				
+			//Converts something like 4578863 (bytes) to 4.6 (megabytes)
 				$size = sprintf("%.1f", intval($fileData['filesize']) / 1000000);
 				
 			//Cache the results
@@ -130,7 +160,7 @@ class Audio_Caching_Manager {
 					"Visible" => 1,
 					"Title" => $title,
 					"Artist" => $artist,
-					"Date" => $year,
+					"Date" => $date,
 					"Length" => $fileData['playtime_string'],
 					"FileSize" => $size,
 					"FileName" => $fileData['filename']

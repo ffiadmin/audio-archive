@@ -4,6 +4,8 @@
 */
 
 section#splash {
+	border-bottom: 1px solid #DDDDDD;
+	border-top: 1px solid #DDDDDD;
     position: relative;
 }
 
@@ -72,19 +74,37 @@ section#splash div.ad-container div.ad-contents.transition {
     background-color: rgba(255, 255, 255, 1);
 }
 
+section#splash div.info {
+	background: #F5F5F5;
+	height: 88px;
+	text-align: center;
+}
 
-@media screen and (max-width: 980px) {
-    section#splash div.ad-container {
-        border-bottom: 1px solid #DDDDDD;
-    }
+section#splash div.info p {
+	color: #AAAAAA;
+	font-size: 14px;
+	font-weight: lighter;
+	margin: 0px;
+	padding-top: 19px;
+	vertical-align: middle;
+}
+
+section#splash div.info p strong {
+	background: url(images/icons.png) no-repeat top left;
+	color: #333333;
+	display: inline-block;
+	padding: 16px 0px 16px 35px;
+	text-transform: uppercase;
 }
 
 @media screen and (max-width: 650px) {    
     section#splash div.ad-container {
-        height: 100px;
-        max-height: 100px;
-        min-height: 100px;
+        display: none;
     }
+	
+	section#splash div.info p em {
+		display: none;
+	}
 }
 
 /**
@@ -147,11 +167,165 @@ section.content.center p, article.content.center p {
 }
 
 @media screen and (max-width: 650px) {
-    article.content {
+    section.content, article.content {
         padding: 15px 10% 15px 10%;
     }
     
-    article.content h2::after {
+    section.content h2::after, article.content h2::after {
         content: none;
     }
+}
+
+/**
+ * Sermon items
+ * ----------------------------------
+*/
+
+section.content ul.sermons {
+    list-style: none;
+    margin: 0px;
+    padding: 0px 0px 40px 0px;
+    text-align: center;
+}
+
+section.content ul.sermons li {
+    -moz-transition: all .25s ease-in-out;
+	-ms-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+	-webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+    
+    background-position: top center;
+    background-repeat: no-repeat;
+    border: 1px solid #E4E4E4;
+    display: inline-block;
+    height: 200px;
+    margin: 7px;
+    position: relative;
+	text-align: left;
+    vertical-align: top;
+    width: 300px;
+}
+
+section.content ul.sermons li:hover {
+    border: 1px solid #555555;
+}
+
+section.content ul.sermons li h3 {
+	background: #F0F0F0;
+	border-bottom: 1px solid #E4E4E4;
+	font-size: 20px;
+	font-weight: lighter;
+	margin: 0px;
+	padding: 10px 15px 10px 15px;
+}
+
+section.content ul.sermons li p.preacher {
+    font-size: 11px;
+	font-weight: bold;
+    margin: 10px 0px 0px 10px;
+	text-align: left;
+}
+
+section.content ul.sermons li time {
+	background: url(images/icons.png) no-repeat;
+	background-position: -6px -176px;
+	display: block;
+    font-size: 11px;
+    margin: 5px 0px 0px 10px;
+	padding: 0px 0px 25px 20px;
+}
+
+section.content ul.sermons li p.length {
+	background: url(images/icons.png) no-repeat;
+	background-position: 3px -134px;
+	bottom: 20px;
+	font-size: 11px;
+	left: 0px;
+	margin: 0px;
+	padding: 10px 150px 19px 25px;
+	position: absolute;
+	text-align: left;
+}
+
+section.content ul.sermons li p.size {
+	bottom: 20px;
+	font-size: 11px;
+	margin: 0px;
+	padding: 10px 15px 19px 150px;
+	position: absolute;
+	right: 0px;
+	text-align: right;
+}
+
+section.content ul.sermons li a.link {
+	-moz-transition: all .25s ease-in-out;
+	-ms-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+	-webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+	
+	bottom: 0px;
+	color: #FFFFFF;
+	display: inline-block;
+	padding: 5px 0px 5px 0px;
+	position: absolute;
+	text-align: center;
+}
+
+section.content ul.sermons li a.download.link {
+	background: url(images/icons.png) no-repeat #7E0000;
+	background-position: 20px -58px;
+	left: 0px;
+	padding-left: 15px;
+	width: 133px;
+}
+
+section.content ul.sermons li a.link.stream {	
+	background: url(images/icons.png) no-repeat #1570A6;
+	background-position: 20px -92px;
+	padding-left: 10px;
+	right: 0px;
+	width: 138px;
+}
+
+section.content ul.sermons li a.link.link:hover, section.content ul.sermons li a.link.stream:hover {	
+	background-color: #555555;
+}
+
+@media screen and (max-width: 650px) {
+	section.content ul.sermons li {
+		-moz-transition: all .25s ease-in-out;
+		-ms-transition: all .25s ease-in-out;
+		-o-transition: all .25s ease-in-out;
+		-webkit-transition: all .25s ease-in-out;
+		transition: all .25s ease-in-out;
+		
+		background-position: top center;
+		background-repeat: no-repeat;
+		border: 1px solid #E4E4E4;
+		display: inline-block;
+		height: 200px;
+		margin: 7px;
+		position: relative;
+		text-align: left;
+		vertical-align: top;
+		width: 100%;
+	}
+	
+	section.content ul.sermons li p.size {
+		display: none;
+	}
+	
+	section.content ul.sermons li a.download.link {
+		display: none;
+	}
+	
+	section.content ul.sermons li a.link.stream {
+		background-image: none;	
+		left: 0px;
+		padding-left: 0px;
+		right: 0px;
+		width: 100%;
+	}
 }
