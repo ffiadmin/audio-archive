@@ -1,19 +1,24 @@
 <?php
 //Configure the page title and loaded scripts
 	$essentials->setTitle("Audio Archive");
+	$essentials->includePluginClass("Display_Manager");
+	$display = new FFI\AAM\Display_Manager();
 	
-//Welcome splash section	
+//Welcome splash section
+	$sermons = $display->total == 1 ? "1 sermon" : $display->total . " sermons";
+	$age = $display->first === 0 ? "" : " <em>This archive dates back to " . $display->first . ".</em>"; //Only works with ===, == is a tautology
+	
 	echo "<section id=\"splash\">
 <h2>Audio Archive</h2>
 
-<div class=\"ad-container\" data-background=\"http://localhost/wordpress/wp-content/plugins/audio-archive/app/images/splash/sitting.jpg\">
+<div class=\"ad-container\" data-background=\"http://localhost/wordpress/wp-content/plugins/audio-archive/app/images/splash/" . $display->background() . "\">
 <div class=\"ad-contents\">
 <h2>Audio Archive</h2>
 </div>
 </div>
 
 <div class=\"info\">
-<p><strong>4 sermons on record.</strong> <em>This archive dates back to March 2nd, 2013.</em></p>
+<p><strong>" . $sermons . " on record.</strong>" . $age . "</p>
 </div>
 </section>
 
