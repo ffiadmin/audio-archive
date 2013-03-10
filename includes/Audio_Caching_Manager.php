@@ -85,6 +85,8 @@ class Audio_Caching_Manager {
  *  - date (custom metadata tag, not native to MP3, uses file last modified time
  *    if not avaliable)
  *  - audio play time
+ *  - audio format
+ *  - audio MIME time
  *  - file size
  *  - file name
  * 
@@ -162,6 +164,8 @@ class Audio_Caching_Manager {
 					"Artist" => $artist,
 					"Date" => $date,
 					"Length" => $fileData['playtime_string'],
+					"Format" => $fileData['fileformat'],
+					"MIME" => $fileData['mime_type'],
 					"FileSize" => $size,
 					"FileName" => $fileData['filename']
 				));

@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteRule ^stream/(.*)/$ gateway.php?id=$1&type=stream [L]
+RewriteRule ^download/(.*)/$ gateway.php?id=$1&type=download [L]
