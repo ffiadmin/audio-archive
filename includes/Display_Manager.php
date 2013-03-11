@@ -2,7 +2,9 @@
 namespace FFI\AAM;
 
 class Display_Manager {
+	private $archive;
 	private $dateFormatter;
+	private $monthTotal = 0;
 	public $total = 0;
 	public $first = 0;
 	public $year = 0;
@@ -13,9 +15,10 @@ class Display_Manager {
 		$this->year = $year == 0 ? $this->dateFormatter->format("Y") : $year;
 		
 		$this->stats();
+		$this->fetchArchive();
 		$this->avaliableYears();
 	}
-	//SELECT ffi_aam_audiocache.*, DATE_FORMAT(`Date`, '%M') AS Month, YEAR(`Date`) AS Year FROM `ffi_aam_audiocache` WHERE `Date` > '2013-01-01' AND `Date` < '2013-12-31' ORDER BY YEAR(`Date`) DESC, MONTH(`Date`) DESC, `Date` ASC;
+	
 	//SELECT DATE_FORMAT(`Date`, '%Y') AS `Year`, COUNT(Year(`Date`)) AS Total FROM `ffi_aam_audiocache` GROUP BY `Year` ORDER BY `Year` DESC;
 	public function background() {
 	//The main page (the current year) will display a different set of images than previous years
@@ -40,9 +43,20 @@ class Display_Manager {
 		}
 	}
 	
+	private function fetchArchive() {
+		global $wpdb;
+		
+		$this->archive = $wpdb->query($wpdb->prepare("SELECT `ffi_aam_audiocache`.*, DATE_FORMAT(`Date`, '%M') AS `Month`, YEAR(`Date`) AS `Year` FROM `ffi_aam_audiocache` WHERE `Date` >= '%s' AND `Date` <= '%s' ORDER BY YEAR(`Date`) DESC, MONTH(`Date`) DESC, `Date` ASC", $this->year . "-01-01", $this->year . "-12-31"));
+		$this->monthTotal = count($this->archive);
+	}
+	
 	private function avaliableYears() {
 		global $wpdb;
 		$this->years = $wpdb->get_col($wpdb->prepare("SELECT DISTINCT DATE_FORMAT(`Date`, '%Y') AS `Year` FROM `ffi_aam_audiocache`"));
+	}
+	
+	public function monthAvaliable() {
+		return --$this->monthTotal >= 1;
 	}
 }
 ?>
