@@ -11,7 +11,7 @@
 	echo "<section id=\"splash\">
 <h2>Audio Archive</h2>
 
-<div class=\"ad-container\" data-background=\"http://localhost/wordpress/wp-content/plugins/audio-archive/app/images/splash/" . $display->background() . "\">
+<div class=\"ad-container\" data-background=\"" . REAL_ADDR . "app/images/splash/" . $display->background() . "\">
 <div class=\"ad-contents\">
 <h2>Audio Archive</h2>
 </div>
@@ -24,117 +24,37 @@
 
 ";
 
-//Welcome splash section	
-	echo "<section class=\"center content\">
-<h2>2013 Sermon Recordings</h2>
+//Audio archive sections
+	$counter = 1;
+	
+	while ($display->monthAvaliable()) {
+		echo "<section class=\"center content" . ($counter % 2 ? "" : " even") . "\">
+<h2>" . $display->getMonth() . "</h2>
 
-<ul class=\"sermons aqua\">
-<li>
-<a href=\"#\">
-<h3>A</h3>
-<p class=\"preacher\">Oliver Spryn</p>
-<time datetime=\"2013-03-02\">Sunday, March 2nd, 2013</time>
-<p class=\"length\">0:06</p>
-<p class=\"size\">0.1 MB</p>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</a>
-</li>
-
-<li>
-<a href=\"#\">
-<h3>Made in the Image of God - Part 2</h3>
-<p class=\"preacher\">Paul LaFontaine</p>
-<time datetime=\"2013-02-16\">Sunday, February 16th, 2013</time>
-<p class=\"length\">1:22:49</p>
-<p class=\"size\">19.9 MB</p>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</a>
-</li>
-
-<li>
-<a href=\"#\">
-<h3>Church Order</h3>
-<p class=\"preacher\">Paul LaFontaine</p>
-<time datetime=\"2013-02-16\">Sunday, February 16th, 2013</time>
-<p class=\"length\">2:20:48</p>
-<p class=\"size\">33.8 MB</p>
-</a>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</li>
-
-<li>
-<a href=\"#\">
-<h3>Called, Created for a Purpose</h3>
-<p class=\"preacher\">Richard Hyatt</p>
-<time datetime=\"2013-02-16\">Sunday, February 16th, 2013</time>
-<p class=\"length\">1:10:14</p>
-<p class=\"size\">33.7 MB</p>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</li>
-</a>
-</ul>
+<ul class=\"sermons " . $display->getColor() . "\">";
+		
+		while ($display->fileAvaliable()) {
+			echo $display->renderItem();
+		}
+		
+		echo "</ul>
 </section>
 
 ";
 
-//Welcome splash section	
-	echo "<section class=\"center content even\">
-<h2>2013 Sermon Recordings</h2>
+		++$counter;
+	}
+	
+//Audio archive avaliable years
+	echo "<section class=\"center content" . ($counter % 2 ? "" : " even") . "\">
+<h2 class=\"hidden\">Other Years</h2>
 
-<ul class=\"sermons aqua\">
-<li>
-<a href=\"#\">
-<h3>A</h3>
-<p class=\"preacher\">Oliver Spryn</p>
-<time datetime=\"2013-03-02\">Sunday, March 2nd, 2013</time>
-<p class=\"length\">0:06</p>
-<p class=\"size\">0.1 MB</p>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</a>
-</li>
+<ul class=\"years\">";
 
-<li>
-<a href=\"#\">
-<h3>Made in the Image of God - Part 2</h3>
-<p class=\"preacher\">Paul LaFontaine</p>
-<time datetime=\"2013-02-16\">Sunday, February 16th, 2013</time>
-<p class=\"length\">1:22:49</p>
-<p class=\"size\">19.9 MB</p>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</a>
-</li>
+	while ($display->yearAvaliable()) {
+		echo $display->renderYear();
+	}
 
-<li>
-<a href=\"#\">
-<h3>Church Order</h3>
-<p class=\"preacher\">Paul LaFontaine</p>
-<time datetime=\"2013-02-16\">Sunday, February 16th, 2013</time>
-<p class=\"length\">2:20:48</p>
-<p class=\"size\">33.8 MB</p>
-</a>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</li>
-
-<li>
-<a href=\"#\">
-<h3>Called, Created for a Purpose</h3>
-<p class=\"preacher\">Richard Hyatt</p>
-<time datetime=\"2013-02-16\">Sunday, February 16th, 2013</time>
-<p class=\"length\">1:10:14</p>
-<p class=\"size\">33.7 MB</p>
-<a class=\"download link\" href=\"#\"><span>Download</span></a>
-<a class=\"link stream\" href=\"#\"><span>Stream</span></a>
-</li>
-</a>
-</ul>
-</section>
-
-";
+	echo "</ul>
+</section>";
 ?>

@@ -90,7 +90,8 @@ section#splash div.info p {
 }
 
 section#splash div.info p strong {
-	background: url(images/icons.png) no-repeat top left;
+	background: url(images/icons.png) no-repeat;
+	background-position: -29px 0px;
 	color: #333333;
 	display: inline-block;
 	padding: 16px 0px 16px 35px;
@@ -249,20 +250,20 @@ section.content ul.sermons li a p.preacher {
 
 section.content ul.sermons li a time {
 	background: url(images/icons.png) no-repeat;
-	background-position: 3px -166px;
+	background-position: -24px -190px;
 	bottom: 50px;
 	color: #7B8084;
 	display: block;
     font-size: 11px;
 	left: 0px;
-	padding: 10px 10px 10px 30px;
+	padding: 60px 10px 10px 30px;
 	position: absolute;
 	right: 0px;
 }
 
 section.content ul.sermons li a p.length {
 	background: url(images/icons.png) no-repeat;
-	background-position: 3px -134px;
+	background-position: -25px -134px;
 	bottom: 29px;
 	color: #7B8084;
 	font-size: 11px;
@@ -301,29 +302,29 @@ section.content ul.sermons li a.link {
 	text-align: center;
 }
 
-section.content ul.sermons li a.link.download {
-	left: 0px;
-	width: 48%;
-}
-
-section.content ul.sermons li a.link.download span {
-	background: url(images/icons.png) no-repeat;
-	background-position: -5px -64px;
-	padding-left: 20px;
-}
-
 section.content ul.sermons li a.link.stream {	
-	right: 0px;
+	left: 0px;
 	width: 48%;
 }
 
 section.content ul.sermons li a.link.stream span {
 	background: url(images/icons.png) no-repeat;
-	background-position: 0px -97px;
+	background-position: -30px -97px;
 	padding-left: 33px;
 }
 
-section.content ul.sermons li a.link.download:hover, section.content ul.sermons li a.link.stream:hover {	
+section.content ul.sermons li a.link.download {
+	right: 0px;
+	width: 48%;
+}
+
+section.content ul.sermons li a.link.download span {
+	background: url(images/icons.png) no-repeat;
+	background-position: -35px -64px;
+	padding-left: 20px;
+}
+
+section.content ul.sermons li a.link.stream:hover, section.content ul.sermons li a.link.download:hover {	
 	background-color: #555555 !important;
 	color: #FFFFFF !important;
 }
@@ -334,6 +335,8 @@ section.content ul.sermons li a.link.download:hover, section.content ul.sermons 
 	}
 	
 	section.content ul.sermons li {
+		background: url(images/icons.png) no-repeat;
+		background-position: 106% -70px;
 		border-left: none;
 		border-right: none;
 		height: 120px;
@@ -350,16 +353,27 @@ section.content ul.sermons li a.link.download:hover, section.content ul.sermons 
 		-o-box-shadow: none;
 		-webkit-box-shadow: none;
 		box-shadow: none;
+		
+		background-color: #EEEEEE;
+	}
+	
+	section.content ul.sermons li:active {
+		background-color: #EEEEEE;
 	}
 	
 	section.content ul.sermons li a h3 {
 		border-bottom: none;
+		font-size: 14px;
+		font-weight: bolder;
+		padding-bottom: 5px;
+		position: relative;
 		top: 0px;
 	}
 	
 	section.content ul.sermons li p.preacher {
 		border-top: none !important;
-		top: 32px !important;
+		padding-top: 0px !important;
+		position: relative !important;
 	}
 	
 	section.content ul.sermons li a time {
@@ -379,19 +393,18 @@ section.content ul.sermons li a.link.download:hover, section.content ul.sermons 
 	section.content ul.sermons li a.download.link, section.content ul.sermons li a.link.stream {
 		display: none;
 	}
-	
-	/*section.content ul.sermons li a.link.stream {
-		background-image: none;	
-		left: 0px;
-		padding-left: 0px;
-		right: 0px;
-		width: 100%;
+}
+
+@media screen and (max-width: 525px) {
+	section.content ul.sermons li {
+		background-position: 109% -70px;
 	}
-	
-	section.content ul.sermons li a.link.stream span {
-		background: none;
-		padding-left: 0px;
-	}*/
+}
+
+@media screen and (max-width: 375px) {
+	section.content ul.sermons li {
+		background-position: 111% -70px;
+	}
 }
 
 /**
@@ -403,11 +416,11 @@ section.content ul.sermons.red li p.preacher {
 	border-top-color: #FF1769;
 }
 
-section.content ul.sermons.red li a.link.download {
+section.content ul.sermons.red li a.link.stream {
 	background-color: #FF1769;
 }
 
-section.content ul.sermons.red li a.link.stream {
+section.content ul.sermons.red li a.link.download {
 	background-color: #9B175A;
 }
 
@@ -417,11 +430,11 @@ section.content ul.sermons.orange li p.preacher {
 	border-top-color: #FFA865;
 }
 
-section.content ul.sermons.orange li a.link.download {
+section.content ul.sermons.orange li a.link.stream {
 	background-color: #FFA865;
 }
 
-section.content ul.sermons.orange li a.link.stream {
+section.content ul.sermons.orange li a.link.download {
 	background-color: #C38244;
 }
 
@@ -431,12 +444,12 @@ section.content ul.sermons.yellow li p.preacher {
 	border-top-color: #FFD800;
 }
 
-section.content ul.sermons.yellow li a.link.download {
+section.content ul.sermons.yellow li a.link.stream {
 	background-color: #FFD800;
 	color: #666666;
 }
 
-section.content ul.sermons.yellow li a.link.stream {
+section.content ul.sermons.yellow li a.link.download {
 	background-color: #C3CC44;
 	color: #666666;
 }
@@ -447,11 +460,11 @@ section.content ul.sermons.lime li p.preacher {
 	border-top-color: #BAD80A;
 }
 
-section.content ul.sermons.lime li a.link.download {
+section.content ul.sermons.lime li a.link.stream {
 	background-color: #BAD80A;
 }
 
-section.content ul.sermons.lime li a.link.stream {
+section.content ul.sermons.lime li a.link.download {
 	background-color: #537001;
 }
 
@@ -461,11 +474,11 @@ section.content ul.sermons.green li p.preacher {
 	border-top-color: #71B640;
 }
 
-section.content ul.sermons.green li a.link.download {
+section.content ul.sermons.green li a.link.stream {
 	background-color: #71B640;
 }
 
-section.content ul.sermons.green li a.link.stream {
+section.content ul.sermons.green li a.link.download {
 	background-color: #2CA243;
 }
 
@@ -475,12 +488,12 @@ section.content ul.sermons.aqua li p.preacher {
 	border-top-color: #00D8CC;
 }
 
-section.content ul.sermons.aqua li a.link.download {
+section.content ul.sermons.aqua li a.link.stream {
 	background-color: #00D8CC;
 	color: #333333;
 }
 
-section.content ul.sermons.aqua li a.link.stream {
+section.content ul.sermons.aqua li a.link.download {
 	background-color: #007172;
 }
 
@@ -490,11 +503,11 @@ section.content ul.sermons.light-blue li p.preacher {
 	border-top-color: #49AFCD;
 }
 
-section.content ul.sermons.light-blue li a.link.download {
+section.content ul.sermons.light-blue li a.link.stream {
 	background-color: #49AFCD;
 }
 
-section.content ul.sermons.light-blue li a.link.stream {
+section.content ul.sermons.light-blue li a.link.download {
 	background-color: #2F96CF;
 }
 
@@ -504,11 +517,11 @@ section.content ul.sermons.blue li p.preacher {
 	border-top-color: #00CCFF;
 }
 
-section.content ul.sermons.blue li a.link.download {
+section.content ul.sermons.blue li a.link.stream {
 	background-color: #00CCFF;
 }
 
-section.content ul.sermons.blue li a.link.stream {
+section.content ul.sermons.blue li a.link.download {
 	background-color: #24459A;
 }
 
@@ -518,11 +531,11 @@ section.content ul.sermons.purple li p.preacher {
 	border-top-color: #9B4F96;
 }
 
-section.content ul.sermons.purple li a.link.download {
+section.content ul.sermons.purple li a.link.stream {
 	background-color: #9B4F96;
 }
 
-section.content ul.sermons.purple li a.link.stream {
+section.content ul.sermons.purple li a.link.download {
 	background-color: #68217A;
 }
 
@@ -532,11 +545,11 @@ section.content ul.sermons.pink li p.preacher {
 	border-top-color: #F473D0;
 }
 
-section.content ul.sermons.pink li a.link.download {
+section.content ul.sermons.pink li a.link.stream {
 	background-color: #F473D0;
 }
 
-section.content ul.sermons.pink li a.link.stream {
+section.content ul.sermons.pink li a.link.download {
 	background-color: #E34096;
 }
 
@@ -546,11 +559,11 @@ section.content ul.sermons.black li p.preacher {
 	border-top-color: #454545;
 }
 
-section.content ul.sermons.black li a.link.download {
+section.content ul.sermons.black li a.link.stream {
 	background-color: #454545;
 }
 
-section.content ul.sermons.black li a.link.stream {
+section.content ul.sermons.black li a.link.download {
 	background-color: #1A1A1A;
 }
 
@@ -560,12 +573,69 @@ section.content ul.sermons.white li p.preacher {
 	border-top-color: #ECECEF;
 }
 
-section.content ul.sermons.white li a.link.download {
+section.content ul.sermons.white li a.link.stream {
 	background-color: #ECECEF;
 	color: #666666;
 }
 
-section.content ul.sermons.white li a.link.stream {
-	background-color: #302E2F;
+section.content ul.sermons.white li a.link.download {
+	background-color: #AAAAAA;
 	color: #666666;
+}
+
+/**
+ * Sermon items color varients
+ * ----------------------------------
+*/
+
+section.content ul.years {
+	list-style: none;
+	margin: 0px;
+	padding: 40px 0px 0px 0px;
+	text-align: center;
+}
+
+section.content ul.years li {
+	-moz-transition: all .25s ease-in-out;
+	-ms-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+	-webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+	
+	background: #FBFBFB;
+	border: 1px solid #DDDDDD;
+	cursor: pointer;
+	display: inline-block;
+	margin: 5px;
+	width: 200px;
+}
+
+section.content ul.years li.active, section.content ul.years li:hover {
+	background: #303030;
+}
+
+section.content ul.years li time {
+	display: block;
+	font-size: 15px;
+	font-weight: bolder;
+	padding-top: 15px;
+	text-transform: uppercase;
+}
+
+section.content ul.years li p {
+	-moz-transition: all .25s ease-in-out;
+	-ms-transition: all .25s ease-in-out;
+    -o-transition: all .25s ease-in-out;
+	-webkit-transition: all .25s ease-in-out;
+    transition: all .25s ease-in-out;
+	
+	color: #000000;
+	display: block;
+	font-size: 12px;
+	padding-bottom: 5px;
+	text-align: center;
+}
+
+section.content ul.years li.active p, section.content ul.years li:hover p {
+	color: #FFFFFF;
 }
